@@ -5,9 +5,9 @@ services:
     container_name: $API_CONTAINER_NAME
     command: bash -c 'yarn && yarn start'
     ports:
-      - 4000:4000
+      - $API_PORT:$API_PORT
     expose:
-      - 4000
+      - $API_PORT
     working_dir: $API_WORKING_DIR
     volumes:
       - $API_VOLUME
@@ -19,9 +19,9 @@ services:
     image: $MYSQL_IMAGE
     container_name: $MYSQL_CONTAINER_NAME
     ports:
-      - 3306:3306
+      - $MYSQL_PORT:$MYSQL_PORT
     expose:
-      - 3306
+      - $MYSQL_PORT
     env_file:
       - .env
 networks:
