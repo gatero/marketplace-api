@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  api:
+    image: $API_IMAGE
+    container_name: $API_CONTAINER_NAME
+    command: bash -c 'yarn && yarn start'
+    ports:
+      - 4000:4000
+    expose:
+      - 4000
+    working_dir: $API_WORKING_DIR
+    volumes:
+      - $API_VOLUME
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: $MYSQL_IMAGE
+    container_name: $MYSQL_CONTAINER_NAME
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    env_file:
+      - .env
+networks:
+  default:
+    name: $NETWORK
