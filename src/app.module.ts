@@ -9,16 +9,28 @@ import { Product } from './entities/product.entity';
 import { ProvidersModule } from './modules/providers/providers.module';
 import { InventoriesModule } from './modules/inventories/inventories.module';
 
+import {
+  IS_DEVELOPMENT
+} from './constants/environment';
+
+import {
+  MYSQL_HOST,
+  MYSQL_USERNAME,
+  MYSQL_ROOT_PASSWORD,
+  MYSQL_DATABASE,
+} from './constants/database';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       port: 3306,
-      username: 'root',
-      password: '',
-      database: '',
+      host: MYSQL_HOST,
+      username: MYSQL_USERNAME,
+      password: MYSQL_ROOT_PASSWORD,
+      database: MYSQL_DATABASE,
       entities: [User, Product],
-      synchronize: true,
+      synchronize: IS_DEVELOPMENT
     }),
     UsersModule, AuthModule, ProvidersModule, InventoriesModule
   ],
