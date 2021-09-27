@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  proxy:
+    container_name: $PROXY_CONTAINER
+    image: $PROXY_IMAGE
+    ports:
+      - $PROXY_HTTP_PORTS
+      - $PROXY_HTTPS_PORTS
+    volumes:
+      - $PROXY_VOLUME_SOCKET
+      - $PROXY_VOLUME_SSL
+  api:
+    image: $API_IMAGE
+    container_name: $API_CONTAINER_NAME
+    command: bash -c 'yarn && yarn start'
+    expose:
+      - $API_PORT
+    working_dir: $API_WORKING_DIR
+    volumes:
+      - $API_VOLUME
+    env_file:
+      - .env
+    depends_on:
+      - db
+    environment:
+      VIRTUAL_HOST: $API_VIRTUAL_HOST
+  db:
+    image: $MYSQL_IMAGE
+    container_name: $MYSQL_CONTAINER_NAME
+    expose:
+      - $MYSQL_PORT
+    env_file:
+      - .env
+networks:
+  default:
+    name: $NETWORK
